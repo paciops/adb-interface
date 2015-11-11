@@ -1,0 +1,9 @@
+body{
+
+  background-image: url('../bg.png');
+  color: #4e342e;
+  font-family: verdana;
+}
+p{
+  font-size: 1.5em;
+}
