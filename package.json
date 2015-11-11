@@ -13,6 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "adbkit": "^2.3.1",
-    "express": "^4.13.3"
+    "colors": "^1.1.2",
+    "express": "^4.13.3",
+    "internal-ip": "^1.1.0"
   }
 }

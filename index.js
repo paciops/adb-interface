@@ -1,12 +1,14 @@
 var espress = require('express');
 var app = espress(),
     adb = require('adbkit'),
-    client = adb.createClient();
+    client = adb.createClient(),
+    IP = require('internal-ip'),
+    colors = require('colors');
 
 app.use(espress.static('public'));
 
 var server = app.listen(8080, function () {
-  console.info('http://localhost:'+server.address().port);
+  console.info(('http://'.red+(IP.v4()).yellow+':'+(server.address().port+'').cyan).bold);
 });
 
 var status = {};
