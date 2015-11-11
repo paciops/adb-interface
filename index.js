@@ -3,10 +3,10 @@ var app = express(),
     adb = require('adbkit'),
     client = adb.createClient(),
     IP = require('internal-ip'),
-    colors = require('colors');
-var bodyParser = require('body-parser');
+    colors = require('colors'),
+    bodyParser = require('body-parser'),
+    nic, netStatus;
 
-app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(express.static('public'));
@@ -21,9 +21,13 @@ app.get('/status', function (req, res) {
   res.send(status);
 });
 app.post('/interface', function(req, res) {
-  console.log(typeof (req.body));
-  console.log(req.body);
-  res.send(req.body);
+  nic = req.body.nic;
+  netStatus = require('os').networkInterfaces()[nic];
+  if (netStatus===undefined) {
+    res.send('interface not found');
+  }else {
+    res.send(netStatus[0]['netmask']);
+  }
 });
 
 client.trackDevices()

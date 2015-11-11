@@ -45,8 +45,8 @@ window.onload = function() {
         console.log(inter.responseText);
       }
     };
-    inter.open('POST', '/interface');
-    //inter.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    inter.send(nic);
+    inter.open('POST', '/interface', true);
+    inter.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    inter.send('nic='+nic);
   };
 };
