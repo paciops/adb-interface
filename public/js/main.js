@@ -2,11 +2,13 @@ window.onload = function() {
   'use strict';
   document.getElementById('search').onclick= function() {src = true; connectedDevices()};
   document.getElementById('stop').onclick= function() {src = false};
-  document.getElementById('inpInt').addEventListener('change', function() {checkInterface(this.value)});
+  checkInterface(document.getElementById('inpInt').value);
   var httpRequest,
       json = {},
       keys,
-      src;
+      src,
+      time = 15000,
+      inter;
 
 
   function connectedDevices() {
@@ -26,14 +28,14 @@ window.onload = function() {
           }
           setTimeout(function() {
             connectedDevices();
-          }, 1500);
+          }, time);
         }
       };
       httpRequest.open('GET', '/status');
       httpRequest.send();
     }
   };
-  var inter;
+
   function checkInterface(nic) {
     inter = new XMLHttpRequest();
     if (!inter) {
@@ -42,7 +44,14 @@ window.onload = function() {
     }
     inter.onreadystatechange = function(){
       if (inter.readyState == 4 && inter.status == 200){
-        console.log(inter.responseText);
+          if (inter.responseText) {
+            var r = JSON.parse(inter.responseText);
+            console.log(r);
+            document.getElementById('netD').innerHTML=r;
+          }
+        setTimeout(function () {
+          checkInterface(document.getElementById('inpInt').value);
+        },time);
       }
     };
     inter.open('POST', '/interface', true);

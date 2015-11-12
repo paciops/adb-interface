@@ -14,7 +14,7 @@ p{
   border-radius: 0.5em;
   border: none;
 }
-.inter > h3{
+.inter > h3,.inter > ul{
   display: inline-block;
 }
 button{

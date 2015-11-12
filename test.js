@@ -8,28 +8,26 @@ child = exec('adb',
       console.log('exec error: ' + error);
     }
 });
-*//*
-var portscanner = require('portscanner');
-var IP = require('internal-ip');
-var ip = require('ip');
-var os = require('os');
-
-//console.log(IP.v4());
-
 portscanner.checkPortStatus(9091, IP.v4(), function(error, status) {
-  console.log(status);
+  console.log('port: 9091 is '+status);
 });
-os.networkInterfaces().wlan0
 */
-var app = require('express')();
-var bodyParser = require('body-parser');
-var multer = require('multer'); // v1.0.5
-var upload = multer(); // for parsing multipart/form-data
 
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+//var IP = require('internal-ip'); NON SERVE PIU'
+var portscanner = require('portscanner');
+var ip = require('ip');
+var nic = 'wlan0';
 
-app.post('/profile', upload.array(), function (req, res, next) {
-  console.log(req.body);
-  res.json(req.body);
-});
+//### codice ###
+var subnet = require('os').networkInterfaces()[nic][0]['netmask'];
+var data = ip.subnet(ip.address(), subnet);
+var primo = ip.toLong(data.firstAddress);
+for (var i = 0; i < data.numHosts; i++) {
+  (function (n) {
+    portscanner.checkPortStatus(5555, n, function(error, status) {
+      if (status==='open'){
+        console.log(n+':'+status);
+      }
+    });
+  }(ip.fromLong(primo+i)));
+}

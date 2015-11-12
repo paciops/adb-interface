@@ -2,17 +2,18 @@ var express = require('express');
 var app = express(),
     adb = require('adbkit'),
     client = adb.createClient(),
-    IP = require('internal-ip'),
     colors = require('colors'),
     bodyParser = require('body-parser'),
-    nic, netStatus;
+    ip = require('ip'),
+    nic, netStatus, dPort = 5555,
+    portscanner = require('portscanner');
 
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(express.static('public'));
 
 var server = app.listen(8080, function () {
-  console.info(('http://'.red+(IP.v4()).yellow+':'+(server.address().port+'').cyan).bold);
+  console.info(('http://'.red+(ip.address()).yellow+':'+(server.address().port+'').cyan).bold);
 });
 
 var status = {};
@@ -24,9 +25,24 @@ app.post('/interface', function(req, res) {
   nic = req.body.nic;
   netStatus = require('os').networkInterfaces()[nic];
   if (netStatus===undefined) {
-    res.send('interface not found');
+    res.send(null);
   }else {
-    res.send(netStatus[0]['netmask']);
+    var data = ip.subnet(ip.address(), netStatus[0]['netmask']);
+    var first = ip.toLong(data.firstAddress);
+    var end = {},
+        m=0;
+    for (var i = 0; i < data.numHosts; i++) {
+      (function (n, int) {
+        portscanner.checkPortStatus(dPort, n, function(error, status) {
+          if (status==='open'){
+            end[m]=n;
+            m++;
+          }
+          if (int===data.numHosts-1)
+            res.send(end);
+        });
+      }(ip.fromLong(first+i),i));
+    }
   }
 });
 
