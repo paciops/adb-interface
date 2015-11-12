@@ -1,5 +1,8 @@
+@import url('settings.css');
+*{
+  box-sizing: border-box;
+}
 body{
-
   background-image: url('../bg.png');
   color: #4e342e;
   font-family: verdana;
@@ -14,7 +17,7 @@ p{
   border-radius: 0.5em;
   border: none;
 }
-.inter > h3,.inter > ul{
+.inter > h3,ul{
   display: inline-block;
 }
 button{

@@ -1,13 +1,15 @@
 var express = require('express');
-var app = express(),
+var debug = require('debug')('express'),
     adb = require('adbkit'),
-    client = adb.createClient(),
+    portscanner = require('portscanner'),
     colors = require('colors'),
     bodyParser = require('body-parser'),
     ip = require('ip'),
-    nic, netStatus, dPort = 5555,
-    portscanner = require('portscanner');
-
+    client = adb.createClient(),
+    dPort = 80,
+    statusC = {},
+    app = express();
+// #### TESTARE SE BODY PARSER SERVE ANCORA
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(express.static('public'));
@@ -16,46 +18,52 @@ var server = app.listen(8080, function () {
   console.info(('http://'.red+(ip.address()).yellow+':'+(server.address().port+'').cyan).bold);
 });
 
-var status = {};
-
 app.get('/status', function (req, res) {
-  res.send(status);
+  res.send(statusC);
+  debug(statusC);
 });
-app.post('/interface', function(req, res) {
-  nic = req.body.nic;
-  netStatus = require('os').networkInterfaces()[nic];
+
+app.get('/interface', function(req, res) {
+  var nic = req.query.nic,
+      netStatus = require('os').networkInterfaces()[nic];
+
   if (netStatus===undefined) {
     res.send(null);
-  }else {
-    var data = ip.subnet(ip.address(), netStatus[0]['netmask']);
-    var first = ip.toLong(data.firstAddress);
-    var end = {},
-        m=0;
-    for (var i = 0; i < data.numHosts; i++) {
-      (function (n, int) {
-        portscanner.checkPortStatus(dPort, n, function(error, status) {
+  } else {
+    var data = ip.subnet(ip.address(), netStatus[0]['netmask']),
+        first = ip.toLong(data.firstAddress),
+        end = {};
+    var m = 0;
+
+    for (var i = 0; i < data.numHosts; i++){
+      (function (ip, int) {
+        portscanner.checkPortStatus(dPort, ip, function(error, status) {
           if (status==='open'){
-            end[m]=n;
+            end[m] = ip;
             m++;
           }
-          if (int===data.numHosts-1)
+          if (int===data.numHosts-1) {
+            debug('to %s',req.ip.magenta);
+            debug(end);
             res.send(end);
+          }
         });
-      }(ip.fromLong(first+i),i));
+      })(ip.fromLong(first+i),i);
     }
   }
+
 });
 
 client.trackDevices()
   .then(function(tracker) {
     tracker.on('add', function(device) {
-      status[device.id] = 'plugged';
+      statusC[device.id] = 'plugged';
     });
     tracker.on('remove', function(device) {
-      status[device.id] = 'unplugged';
+      statusC[device.id] = 'unplugged';
     });
     tracker.on('end', function() {
-      status = 'Tracking stopped';
+      statusC = 'Tracking stopped';
     });
   })
   .catch(function(err) {

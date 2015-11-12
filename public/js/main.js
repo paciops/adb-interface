@@ -1,8 +1,8 @@
 window.onload = function() {
   'use strict';
-  document.getElementById('search').onclick= function() {src = true; connectedDevices()};
-  document.getElementById('stop').onclick= function() {src = false};
-  checkInterface(document.getElementById('inpInt').value);
+  document.getElementById('search').onclick = function() {src = true; connectedDevices()};
+  document.getElementById('stop').onclick = function() {src = false; document.getElementById('searchStatus').innerHTML='Click START to search'};
+  document.getElementById('scan').onclick = function() {checkInterface(document.getElementById('inpInt').value)};
   var httpRequest,
       json = {},
       keys,
@@ -44,18 +44,17 @@ window.onload = function() {
     }
     inter.onreadystatechange = function(){
       if (inter.readyState == 4 && inter.status == 200){
-          if (inter.responseText) {
-            var r = JSON.parse(inter.responseText);
-            console.log(r);
-            document.getElementById('netD').innerHTML=r;
-          }
-        setTimeout(function () {
-          checkInterface(document.getElementById('inpInt').value);
-        },time);
+        var resJ = JSON.parse(inter.responseText),
+            cont = 0;
+        document.getElementById('netD').innerHTML='';
+        while (resJ[cont]!==undefined) {
+          document.getElementById('netD').innerHTML+='<li>'+resJ[cont];
+          cont++;
+        }
       }
     };
-    inter.open('POST', '/interface', true);
-    inter.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    inter.send('nic='+nic);
+    document.getElementById('searchStatus').innerHTML='Searching...';
+    inter.open('GET', '/interface?nic='+nic, true);
+    inter.send();
   };
 };

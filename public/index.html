@@ -1,21 +1,33 @@
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
     <title>ADB Interface</title>
     <link rel="stylesheet" href="css/style.css">
     <script type="text/javascript" src="js/main.js"></script>
   </head>
   <body>
-    <div class="inter">
-      <h3>Interface</h3>
-      <input type="text" autocomplete="on" placeholder="wlan0" size="3" id="inpInt"/>
-      <ul id="netD"></ul>
+    <div class="row">
+      <div class="col-2">
+        <h3>Interface</h3>
+        <input type="text" autocomplete="on" placeholder="wlan0" size="3" id="inpInt"/>
+        <button id="scan">&#x21ba;</button>
+      </div>
+      <div class="col-2">
+        <h3 id="searchStatus">Click START to search</h3>
+        <button id="search"><b>START</b></button>
+        <button id="stop"><b>STOP</b></button>
+      </div>
     </div>
-    <div>
-      <button id="search"><b>START</b></button>
-      <button id="stop"><b>STOP</b></button>
-      <h3>Decice(s) status</h3>
-      <p id="status"></p>
+
+    <div class="row">
+      <div class="col-2">
+        <h3>Device(s) on network</h3>
+        <ul class="menu" id="netD"></ul>
+      </div>
+      <div class="col-2">
+        <h3>Device(s) status</h3>
+        <ul class="menu" id="status"></ul>
+      </div>
     </div>
   </body>
 </html>
