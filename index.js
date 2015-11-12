@@ -5,7 +5,7 @@ var debug = require('debug')('express'),
     colors = require('colors'),
     ip = require('ip'),
     client = adb.createClient(),
-    dPort = 80,
+    dPort = 5555,
     statusC = {},
     app = express();
 

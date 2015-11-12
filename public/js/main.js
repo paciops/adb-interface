@@ -31,6 +31,7 @@ window.onload = function() {
           }, time);
         }
       };
+      document.getElementById('searchStatus').innerHTML='Searching...';
       httpRequest.open('GET', '/status');
       httpRequest.send();
     }
@@ -53,7 +54,6 @@ window.onload = function() {
         }
       }
     };
-    document.getElementById('searchStatus').innerHTML='Searching...';
     inter.open('GET', '/interface?nic='+nic, true);
     inter.send();
   };
