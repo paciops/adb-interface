@@ -3,14 +3,11 @@ var debug = require('debug')('express'),
     adb = require('adbkit'),
     portscanner = require('portscanner'),
     colors = require('colors'),
-    bodyParser = require('body-parser'),
     ip = require('ip'),
     client = adb.createClient(),
     dPort = 80,
     statusC = {},
     app = express();
-// #### TESTARE SE BODY PARSER SERVE ANCORA
-//app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(express.static('public'));
 
