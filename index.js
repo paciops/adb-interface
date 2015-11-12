@@ -10,7 +10,7 @@ var debug = require('debug')('express'),
     statusC = {},
     app = express();
 // #### TESTARE SE BODY PARSER SERVE ANCORA
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+//app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(express.static('public'));
 
