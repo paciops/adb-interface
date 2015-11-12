@@ -7,7 +7,7 @@ window.onload = function() {
       json = {},
       keys,
       src,
-      time = 15000,
+      time = 1500,
       inter;
 
 
