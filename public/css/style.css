@@ -1,26 +1,53 @@
-@import url('settings.css');
-*{
-  box-sizing: border-box;
-}
-body{
-  background-image: url('../bg.png');
-  color: #4e342e;
+body {
+  background: url('../bg.jpg') no-repeat center center fixed; ;
+  background-size: cover;
+  color: white;
   font-family: verdana;
 }
-p{
+p {
   font-size: 1.5em;
 }
-.inter > input{
-  text-align: right;
+#inpInt{
   font-weight: bold;
   background-color: #80cbc4;
   border-radius: 0.5em;
   border: none;
 }
-.inter > h3,ul{
-  display: inline-block;
-}
-button{
+button {
   border: none;
   border-radius: 0.3em;
+  background-color: #bcaaa4;
 }
+li {
+  padding: 8px;
+  margin-bottom: 7px;
+  background-color: rgba(245 ,245, 245, 0.1);
+  color: #97DAD7;
+  width: 37%;
+  border-radius: 0.5em;
+  box-shadow: 5px 5px 2px #101010;
+}
+* {
+    box-sizing: border-box;
+}
+.row:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
