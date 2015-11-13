@@ -5,7 +5,7 @@ var debug = require('debug')('express'),
     colors = require('colors'),
     ip = require('ip'),
     client = adb.createClient(),
-    dPort = 80,
+    dPort = 5555,
     statusC = {},
     app = express();
 
@@ -25,7 +25,7 @@ app.get('/interface', function(req, res) {
       netStatus = require('os').networkInterfaces()[nic];
 
   if (netStatus===undefined) {
-    res.status(404).send('interface not found');
+    res.status(404).send('nope');
   } else {
     var data = ip.subnet(ip.address(), netStatus[0]['netmask']),
         first = ip.toLong(data.firstAddress),

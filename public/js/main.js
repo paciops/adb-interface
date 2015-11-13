@@ -50,7 +50,15 @@ window.onload = function() {
       return false;
     }
     inter.onreadystatechange = function(){
-      if (inter.readyState == 4 && inter.status == 200){
+      var msgStyle = document.getElementById('msg').style;
+      if (inter.responseText==='nope'){
+        console.log('è nope cambio il banner');
+        msgStyle.display = 'block';
+        msgStyle.opacity = 1;
+      }
+      if (inter.readyState === 4 && inter.status === 200){
+        msgStyle.opacity = 0;
+        setTimeout(function(){msgStyle.display = 'none'},1500);
         var resJ = JSON.parse(inter.responseText),
             cont = 0;
         document.getElementById('netD').innerHTML='';
