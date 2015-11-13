@@ -21,14 +21,17 @@ button {
 li {
   padding: 8px;
   margin-bottom: 7px;
+  text-align: center;
   background-color: rgba(245 ,245, 245, 0.1);
   color: #97DAD7;
-  width: 37%;
+  width: 13em;
   border-radius: 0.5em;
   box-shadow: 5px 5px 2px #101010;
 }
-* {
+@media only screen and (min-width: 660px){
+  * {
     box-sizing: border-box;
+  }
 }
 .row:after {
     content: "";

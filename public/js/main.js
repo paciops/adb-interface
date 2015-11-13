@@ -2,7 +2,14 @@ window.onload = function() {
   'use strict';
   document.getElementById('search').onclick = function() {src = true; connectedDevices()};
   document.getElementById('stop').onclick = function() {src = false; document.getElementById('searchStatus').innerHTML='Click START to search'};
-  document.getElementById('scan').onclick = function() {checkInterface(document.getElementById('inpInt').value)};
+  document.getElementById('scan').onclick = function() {
+    for(var i =0; i< 10;i++){
+       (function(a){
+            setTimeout(function(){ checkInterface(document.getElementById('inpInt').value) }, a*time);
+       })(i);
+    }
+  };
+
   var httpRequest,
       json = {},
       keys,
@@ -15,7 +22,6 @@ window.onload = function() {
     if(src) {
       httpRequest = new XMLHttpRequest();
       if (!httpRequest) {
-        alert('NOPE');
         return false;
       }
       httpRequest.onreadystatechange = function() {
