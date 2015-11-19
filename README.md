@@ -1,8 +1,3 @@
 # adb-interface
-A web interface for the Android Debug Bridge.  :dragon_face:
+adb-interface is express.js server that with your android device using the Android Debug Bridge.
 
-Install
-git clone https://github.com/paciops/adb-interface.git
-cd adb-interface
-npm install
-npm start (DEBUG=express npm start
