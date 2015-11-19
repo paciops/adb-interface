@@ -1,6 +1,6 @@
 # adb-interface
 this application needs of **node.js** and **adb** installed. [see more.](https://github.com/openstf/adbkit#requirements)
-
+ 
 tested only on linux
 
 adb-interface is express.js server that with your android device using the Android Debug Bridge.
