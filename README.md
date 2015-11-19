@@ -19,7 +19,7 @@ go on --> http://localhost:8080
 **for debugging**
 `DEBUG=express npm start`
 
-![test-img](/readme/cmd.png)
+![test-img](/readme/none.png)
 
 # how it works
 the HTML interface send requests to the express.js server that use [adbkit](https://github.com/openstf/adbkit), a framework that allow to comunicate with adb so with android.
