@@ -2,7 +2,7 @@ body {
   background: url('../bg.jpg') no-repeat center center fixed; ;
   background-size: cover;
   color: white;
-  font-family: verdana;
+  font-family: lato;
 }
 p {
   font-size: 1.5em;
@@ -12,6 +12,8 @@ p {
   background-color: #80cbc4;
   border-radius: 0.5em;
   border: none;
+	width: 5em;
+	text-align: center;
 }
 button {
   border: none;
@@ -71,4 +73,8 @@ li {
 #msg > p {
   vertical-align: middle;
   font-size: 2em;
+}
+@font-face {
+    font-family: lato;
+    src: url('Lato-Regular.ttf');
 }
