@@ -8,24 +8,37 @@
   </head>
   <body>
     <div class="row">
-      <div class="col-4">
+      <div class="col-2">
         <h3>Interface</h3>
         <input type="text" autocomplete="on" placeholder="wlan0" size="3" id="inpInt"/>
         <button id="scan">&#x21ba;</button>
       </div>
-      <div class="col-8">
+      <div class="col-2">
         <h3 id="searchStatus">Click START to search</h3>
         <button id="search"><b>START</b></button>
         <button id="stop"><b>STOP</b></button>
       </div>
+			<div class="col-2">
+        <h3>Install APK</h3>
+				<input type="file" accept=".apk"/>
+      </div>
+			<div class="col-2">
+        <h3>Backup your device</h3>
+      </div>
+			<div class="col-2">
+        <h3>Restore a backup</h3>
+      </div>
+			<div class="col-2">
+        <h3>Shell</h3>
+      </div>
     </div>
 
     <div class="row">
-      <div class="col-4">
+      <div class="col-2">
         <h3>Device(s) on network</h3>
         <ul id="netD"></ul>
       </div>
-      <div class="col-8">
+      <div class="col-2">
         <h3>Device(s) status</h3>
         <ul id="status"></ul>
       </div>
