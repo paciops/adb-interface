@@ -7,7 +7,7 @@ body {
 p {
   font-size: 1.5em;
 }
-#inpInt{
+input {
   font-weight: bold;
   background-color: #80cbc4;
   border-radius: 0.5em;
@@ -19,6 +19,12 @@ button {
   border: none;
   border-radius: 0.3em;
   background-color: #bcaaa4;
+	vertical-align: middle;
+	transition: background-color 1s, color 1s;
+}
+button:hover {
+	background-color: black;
+	color: aliceblue;
 }
 li {
   padding: 8px;
@@ -77,4 +83,8 @@ li {
 @font-face {
     font-family: lato;
     src: url('Lato-Regular.ttf');
+}
+#inputFile {
+	width: 100%;
+	margin-top: 1em;
 }

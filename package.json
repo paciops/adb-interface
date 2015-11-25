@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node index.js"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/paciops/adb-interface"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paciops/adb-interface"
   },
   "keywords": [
     "adb"
@@ -20,6 +20,7 @@
     "colors": "git+https://github.com/portgasd666/colors.js.git",
     "express": "^4.13.3",
     "ip": "^1.0.2",
+    "notie": "^2.1.0",
     "portscanner": "^1.0.0"
   }
 }

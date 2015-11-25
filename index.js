@@ -1,3 +1,4 @@
+/* jshint node: true */
 var express = require('express');
 var debug = require('debug')('express'),
     adb = require('adbkit'),
@@ -5,11 +6,13 @@ var debug = require('debug')('express'),
     colors = require('colors'),
     ip = require('ip'),
     client = adb.createClient(),
-    dPort = 5555,
+    dPort = 80,
     statusC = {},
     app = express();
+var fs = require('fs');
 
 app.use(express.static('public'));
+app.use('/node_modules',express.static('node_modules'));
 
 var server = app.listen(8080, function () {
   console.info(('http://'.red+(ip.address()).yellow+':'+(server.address().port+'').cyan).bold);
@@ -27,7 +30,7 @@ app.get('/interface', function(req, res) {
   if (netStatus===undefined) {
     res.status(404).send('nope');
   } else {
-    var data = ip.subnet(ip.address(), netStatus[0]['netmask']),
+    var data = ip.subnet(ip.address(), netStatus[0].netmask),
         first = ip.toLong(data.firstAddress),
         end = {};
     var m = 0;
@@ -49,6 +52,11 @@ app.get('/interface', function(req, res) {
     }
   }
 
+});
+
+app.post('/apkdata', function (req, res) {
+	console.log(req.body);
+	res.send('dio cane');
 });
 
 client.trackDevices()

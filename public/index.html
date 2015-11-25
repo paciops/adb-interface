@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
     <title>ADB Interface</title>
     <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="js/main.js"></script>
   </head>
   <body>
     <div class="row">
@@ -20,7 +19,8 @@
       </div>
 			<div class="col-2">
         <h3>Install APK</h3>
-				<input type="file" accept=".apk"/>
+				<button id="install"><b>INSTALL</b></button>
+				<input id="inputFile" type="file" accept=".apk"/>
       </div>
 			<div class="col-2">
         <h3>Backup your device</h3>
@@ -46,5 +46,7 @@
     <div id="msg">
       <p><strong>interface not found</strong></p>
     </div>
+		<script type="text/javascript" src="../node_modules/notie/notie.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>

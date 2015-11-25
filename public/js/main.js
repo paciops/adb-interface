@@ -1,15 +1,25 @@
+/*jslint browser:true */
 window.onload = function() {
   'use strict';
-  document.getElementById('search').onclick = function() {src = true; connectedDevices()};
-  document.getElementById('stop').onclick = function() {src = false; document.getElementById('searchStatus').innerHTML='Click START to search'};
+  document.getElementById('search').onclick = function() {src = true; connectedDevices();};
+  document.getElementById('stop').onclick = function() {src = false; document.getElementById('searchStatus').innerHTML='Click START to search';};
   document.getElementById('scan').onclick = function() {
     for(var i =0; i< 10;i++){
        (function(a){
-            setTimeout(function(){ checkInterface(document.getElementById('inpInt').value) }, a*time);
+            setTimeout(function(){ checkInterface(document.getElementById('inpInt').value);}, a*time);
        })(i);
     }
   };
-
+	document.getElementById('install').onclick = function() {
+		if (document.getElementById('inputFile').files[0] === undefined || document.getElementById('inputFile').files[0].type !== 'application/vnd.android.package-archive')
+			notie.alert(3, 'Error.<br>No APK inserted', 0.5);
+		if(true){
+			console.log(document.getElementById('inputFile').files[0]);
+			var sendAPK = new XMLHttpRequest();
+			sendAPK.open('POST','/apkdata');
+			sendAPK.send(document.getElementById('inputFile').files[0]);
+		}
+	};
   var httpRequest,
       json = {},
       keys,
@@ -41,7 +51,7 @@ window.onload = function() {
       httpRequest.open('GET', '/status');
       httpRequest.send();
     }
-  };
+  }
 
   function checkInterface(nic) {
     inter = new XMLHttpRequest();
@@ -58,7 +68,7 @@ window.onload = function() {
       }
       if (inter.readyState === 4 && inter.status === 200){
         msgStyle.opacity = 0;
-        setTimeout(function(){msgStyle.display = 'none'},1500);
+        setTimeout(function(){msgStyle.display = 'none';},1500);
         var resJ = JSON.parse(inter.responseText),
             cont = 0;
         document.getElementById('netD').innerHTML='';
@@ -70,5 +80,5 @@ window.onload = function() {
     };
     inter.open('GET', '/interface?nic='+nic, true);
     inter.send();
-  };
+  }
 };
