@@ -6,10 +6,9 @@ var debug = require('debug')('express'),
     colors = require('colors'),
     ip = require('ip'),
     client = adb.createClient(),
-    dPort = 80,
+    dPort = 5555,
     statusC = {},
     app = express();
-var fs = require('fs');
 
 app.use(express.static('public'));
 app.use('/node_modules',express.static('node_modules'));
