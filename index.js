@@ -93,7 +93,12 @@ app.post('/connectToDevice', function (req, res) {
 
 app.post('/setDevice', function(req, res) {
 	deviceID = req.body.id;
-	res.send('mi fanno male le palle');
+	client.shell(deviceID, "pm list packages -f | sed -e 's/.*=//' | sort")
+		.then(adb.util.readAll)
+		.then(function(output) {
+			var out = output.toString().trim();
+			res.send(out);
+		});
 });
 
 client.trackDevices()

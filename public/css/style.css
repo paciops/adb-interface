@@ -88,3 +88,24 @@ li {
 	width: 100%;
 	margin-top: 1em;
 }
+select::-ms-expand {
+    display: none;
+}
+#apks {
+	margin-top: 1em;
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+	width: 100%;
+	color: white;
+	border-radius: 1em;
+	border: 1px solid gray;
+	background-color: transparent;
+	cursor: pointer;
+	overflow: hidden;
+}
+option {
+	background-color: gray;
+	color: black;
+	border: gray;
+}

@@ -87,6 +87,17 @@ function selectedMe(elem) {
 	var device = elem.innerHTML.split(' ')[0];
 	notie.alert(4, device + ' selected', 2);
 	var select = new XMLHttpRequest();
+	if(!select)
+			return false;
+	select.onreadystatechange = function(){
+		if(select.readyState === 4 && select.status === 200){
+			var pkgs = select.responseText.split(/[\n,]+/);
+			pkgs.splice(0,1);
+			document.getElementById('apks').innerHTML = '';
+			for (var pkg in pkgs )
+				document.getElementById('apks').innerHTML += ('<option value="'+pkgs[pkg]+'">'+pkgs[pkg]);
+		}
+	};
 	select.open('POST','/setDevice');
 	select.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	select.send('id='+device);
