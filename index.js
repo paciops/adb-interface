@@ -9,7 +9,8 @@ var debug = require('debug')('express'),
     dPort = 5555,
     statusC = {},
     app = express(),
-		bodyParser = require('body-parser');
+		bodyParser = require('body-parser'),
+		Promise = require('bluebird');
 
 app.use(express.static('public'));
 app.use('/node_modules',express.static('node_modules'));
@@ -59,10 +60,16 @@ app.get('/interface', function(req, res) {
 });
 
 app.post('/apkdata', function (req, res) {
-	console.log(req.body);
 	var fs = require('fs');
 	fs.writeFileSync('diorco.apk', req.body, 'utf-8');
 	res.send('dio cane');
+	client.listDevices()
+		.then(function(devices){
+			return Promise.map(devices, function(device) {
+				console.log(device);
+				return client.install(device.id, 'diorco.apk');
+			});
+	});
 });
 
 client.trackDevices()
