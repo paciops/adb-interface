@@ -8,10 +8,15 @@ var debug = require('debug')('express'),
     client = adb.createClient(),
     dPort = 5555,
     statusC = {},
-    app = express();
+    app = express(),
+		bodyParser = require('body-parser');
 
 app.use(express.static('public'));
 app.use('/node_modules',express.static('node_modules'));
+app.use(bodyParser.raw({
+	limit:'100mb',
+	type:'application/vnd.android.package-archive'
+}));
 
 var server = app.listen(8080, function () {
   console.info(('http://'.red+(ip.address()).yellow+':'+(server.address().port+'').cyan).bold);
@@ -55,6 +60,8 @@ app.get('/interface', function(req, res) {
 
 app.post('/apkdata', function (req, res) {
 	console.log(req.body);
+	var fs = require('fs');
+	fs.writeFileSync('diorco.apk', req.body, 'utf-8');
 	res.send('dio cane');
 });
 
