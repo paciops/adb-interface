@@ -13,7 +13,7 @@ window.onload = function() {
 	document.getElementById('install').onclick = function() {
 		if (document.getElementById('inputFile').files[0] === undefined || document.getElementById('inputFile').files[0].type !== 'application/vnd.android.package-archive')
 			notie.alert(3, 'Error.<br>No APK inserted', 0.5);
-		if(true){
+		else{
 			console.log(document.getElementById('inputFile').files[0]);
 			var sendAPK = new XMLHttpRequest();
 			sendAPK.open('POST','/apkdata');
