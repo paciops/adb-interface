@@ -10,7 +10,7 @@ window.onload = function() {
 			notie.alert(3, 'Error.<br>No APK inserted', 0.5);
 		else{
 			var sendAPK = new XMLHttpRequest();
-			sendAPK.open('POST','/apkdata');
+			sendAPK.open('POST','/apkInstall');
 			sendAPK.send(document.getElementById('inputFile').files[0]);
 		}
 	};

@@ -63,29 +63,6 @@ app.get('/interface', function(req, res) {
 
 });
 
-app.post('/apkdata', function (req, res) {
-	var fs = require('fs');
-	client.listDevices()
-		.then(function(devices){
-			return Promise.map(devices, function(device) {
-				fs.writeFileSync('file.apk', req.body, 'utf-8');
-				return client.install(deviceID, 'file.apk');
-			});
-	})
-	.then(function() {
-    debug('APK installed on '+deviceID);
-		res.send('APK installed');
-  })
-  .catch(function(err) {
-    res.send(err.stack).status(500);
-		console.log(err.stack.red);
-  })
-	.then(function() {
-		fs.unlinkSync('file.apk');
-	});
-	
-});
-
 app.post('/connectToDevice', function (req, res) {
 	client.connect(req.body.ip, dPort);
 	res.send('Connecting to the device...');
@@ -100,6 +77,34 @@ app.post('/setDevice', function(req, res) {
 			res.send(out);
 		});
 });
+
+app.post('/apkInstall', function (req, res) {
+	var fs = require('fs');
+	client.listDevices()
+		.then(function(devices){
+			return Promise.map(devices, function() {
+				fs.writeFileSync('file.apk', req.body, 'utf-8');
+				console.log('Instaling...');
+				return client.install(deviceID, 'file.apk');
+			});
+	})
+	.then(function() {
+    console.log('APK installed on '+deviceID);
+		res.send('APK installed');
+  })
+  .catch(function(err) {
+    res.send(err.stack).status(500);
+		console.log(err.stack.red);
+  })
+	.then(function() {
+		fs.unlinkSync('file.apk');
+	});
+	
+});
+
+app.post('/apkUninstall', function(req, res) {
+	
+})
 
 client.trackDevices()
   .then(function(tracker) {
