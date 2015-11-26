@@ -14,6 +14,9 @@ var debug = require('debug')('express'),
 
 app.use(express.static('public'));
 app.use('/node_modules',express.static('node_modules'));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.raw({
 	limit:'100mb',
 	type:'application/vnd.android.package-archive'
@@ -61,17 +64,30 @@ app.get('/interface', function(req, res) {
 
 app.post('/apkdata', function (req, res) {
 	var fs = require('fs');
-	fs.writeFileSync('diorco.apk', req.body, 'utf-8');
-	res.send('dio cane');
 	client.listDevices()
 		.then(function(devices){
 			return Promise.map(devices, function(device) {
-				console.log(device);
-				return client.install(device.id, 'diorco.apk');
+				fs.writeFileSync('file.apk', req.body, 'utf-8');
+				return client.install(device.id, 'file.apk');
 			});
+	})
+	.then(function() {
+    debug('APK installed');
+		res.send('APK installed');
+  })
+  .catch(function(err) {
+    res.send('Something went wrong:', err.stack);
+  })
+	.then(function() {
+		fs.unlinkSync('file.apk');
 	});
+	
 });
 
+app.post('/connectToDevice', function (req, res) {
+	client.connect(req.body.ip, dPort);
+	res.send('Connecting to the device...');
+});
 client.trackDevices()
   .then(function(tracker) {
     tracker.on('add', function(device) {

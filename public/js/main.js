@@ -3,18 +3,12 @@ window.onload = function() {
   'use strict';
   document.getElementById('search').onclick = function() {src = true; connectedDevices();};
   document.getElementById('stop').onclick = function() {src = false; document.getElementById('searchStatus').innerHTML='Click START to search';};
-  document.getElementById('scan').onclick = function() {
-    for(var i =0; i< 10;i++){
-       (function(a){
-            setTimeout(function(){ checkInterface(document.getElementById('inpInt').value);}, a*time);
-       })(i);
-    }
-  };
+	document.getElementsByClassName('ip').onclick = function(){alert(this.value);alert(this.innerHTML);};
+  document.getElementById('scan').onclick = function() {checkInterface(document.getElementById('inpInt').value);};
 	document.getElementById('install').onclick = function() {
 		if (document.getElementById('inputFile').files[0] === undefined || document.getElementById('inputFile').files[0].type !== 'application/vnd.android.package-archive')
 			notie.alert(3, 'Error.<br>No APK inserted', 0.5);
 		else{
-			console.log(document.getElementById('inputFile').files[0]);
 			var sendAPK = new XMLHttpRequest();
 			sendAPK.open('POST','/apkdata');
 			sendAPK.send(document.getElementById('inputFile').files[0]);
@@ -26,9 +20,8 @@ window.onload = function() {
       src,
       time = 1500,
       inter;
-
-
-  function connectedDevices() {
+	
+	function connectedDevices() {
     if(src) {
       httpRequest = new XMLHttpRequest();
       if (!httpRequest) {
@@ -62,7 +55,6 @@ window.onload = function() {
     inter.onreadystatechange = function(){
       var msgStyle = document.getElementById('msg').style;
       if (inter.responseText==='nope'){
-        console.log('è nope cambio il banner');
         msgStyle.display = 'block';
         msgStyle.opacity = 1;
       }
@@ -73,7 +65,7 @@ window.onload = function() {
             cont = 0;
         document.getElementById('netD').innerHTML='';
         while (resJ[cont]!==undefined) {
-          document.getElementById('netD').innerHTML+='<li>'+resJ[cont];
+          document.getElementById('netD').innerHTML+='<li onclick="connectToDevice(this.innerHTML)">'+resJ[cont];
           cont++;
         }
       }
@@ -82,3 +74,10 @@ window.onload = function() {
     inter.send();
   }
 };
+function connectToDevice(ip) {
+	var sendDevice = new XMLHttpRequest();
+	sendDevice.open('POST','/connectToDevice');
+	//sendDevice.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	sendDevice.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	sendDevice.send('ip='+ip);
+}
