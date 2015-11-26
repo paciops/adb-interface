@@ -1,9 +1,9 @@
 /*jslint browser:true */
+var src;
 window.onload = function() {
   'use strict';
   document.getElementById('search').onclick = function() {src = true; connectedDevices();};
   document.getElementById('stop').onclick = function() {src = false; document.getElementById('searchStatus').innerHTML='Click START to search';};
-	document.getElementsByClassName('ip').onclick = function(){alert(this.value);alert(this.innerHTML);};
   document.getElementById('scan').onclick = function() {checkInterface(document.getElementById('inpInt').value);};
 	document.getElementById('install').onclick = function() {
 		if (document.getElementById('inputFile').files[0] === undefined || document.getElementById('inputFile').files[0].type !== 'application/vnd.android.package-archive')
@@ -17,7 +17,6 @@ window.onload = function() {
   var httpRequest,
       json = {},
       keys,
-      src,
       time = 1500,
       inter;
 	
@@ -33,7 +32,7 @@ window.onload = function() {
           keys = Object.keys(json);
           document.getElementById('status').innerHTML='';
           for (var i = 0; i < keys.length; i++) {
-            document.getElementById('status').innerHTML+='<li>'+keys[i]+' '+json[keys[i]];
+            document.getElementById('status').innerHTML+='<li class="connected" onclick="selectedMe(this)">'+keys[i]+' '+json[keys[i]];
           }
           setTimeout(function() {
             connectedDevices();
@@ -74,10 +73,21 @@ window.onload = function() {
     inter.send();
   }
 };
+
 function connectToDevice(ip) {
 	var sendDevice = new XMLHttpRequest();
+	notie.alert(4, 'Connecting to '+ip, 2);
 	sendDevice.open('POST','/connectToDevice');
-	//sendDevice.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	sendDevice.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	sendDevice.send('ip='+ip);
 }
+
+function selectedMe(elem) {
+	src = false;
+	var device = elem.innerHTML.split(' ')[0];
+	notie.alert(4, device + ' selected', 2);
+	var select = new XMLHttpRequest();
+	select.open('POST','/setDevice');
+	select.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	select.send('id='+device);
+};
