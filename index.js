@@ -1,17 +1,17 @@
 /* jshint node: true */
 var express = require('express');
-var debug = require('debug')('express'),
-    adb = require('adbkit'),
-    portscanner = require('portscanner'),
-    colors = require('colors'),
-    ip = require('ip'),
-    client = adb.createClient(),
-    dPort = 5555,
-    statusC = {},
-		deviceID,
-    app = express(),
-		bodyParser = require('body-parser'),
-		Promise = require('bluebird');
+var debug = require('debug')('express');
+var adb = require('adbkit');
+var portscanner = require('portscanner');
+var colors = require('colors');
+var ip = require('ip');
+var client = adb.createClient();
+var dPort = 5555;
+var statusC = {};
+var deviceID;
+var app = express();
+var bodyParser = require('body-parser');
+var Promise = require('bluebird');
 
 app.use(express.static('public'));
 app.use('/node_modules',express.static('node_modules'));
